@@ -1,5 +1,5 @@
 <?php
-require_once(dirname(__FILE__)."/../../composer/vendor/autoload.php");
+require_once(dirname(__FILE__)."/../composer/vendor/autoload.php");
 use \Firebase\JWT\JWT;
 class ZoomCtrl{
   private $user = 0;
@@ -23,7 +23,7 @@ class ZoomCtrl{
     return $jwt;
   }
 
-  function create_zoom_meeting(int $time, int $duration, string $title, int $user){
+  function create_zoom_meeting(int $time, int $duration, string $title){
     $meeting_setting = array(
       "host_video"=>true, //ホストのビデオ
       "participant_video"=>true,  //参加者のビデオ
@@ -64,8 +64,7 @@ class ZoomCtrl{
     $result = array(
       "url" => $json->join_url,
       "password" => $json->password,
-      "id" => $json->id,
-      "user" => $user
+      "id" => $json->id
     );
 
     return $result;
@@ -95,7 +94,6 @@ class ZoomCtrl{
     }
   }
 
-  /*
   function get_user_detail(){
     $curl = curl_init();
 
@@ -116,6 +114,5 @@ class ZoomCtrl{
     $json = json_decode($response);
     return ["id" => $json->users[0]->id, "name" => $json->users[0]->first_name.$json->users[0]->last_name];
   }
-  */
 }
 ?>

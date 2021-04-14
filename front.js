@@ -12,11 +12,16 @@ let page_controller = null;
         axios.post("./api/create_zoom_meeting.php",{
           date: this.req_date,
           time: this.req_time,
-          title: this.title
+          title: this.req_title
         }).then(function(response){
-          alert(response);
+          let api_result = JSON.parse(response);
+					if(api_result.result == 1){
+						alert("登録しました");
+					}else{
+						alert(api_result.message);
+					}
         }).catch(function(){
-          alert("er");
+          alert("失敗しました");
         });
       }
     },
