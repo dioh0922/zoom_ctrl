@@ -14,9 +14,25 @@
         <li><input type="text" v-model="req_title"/></li>
         <li><input type="button" value="登録" v-on:click="create_meeting"/></li>
       </ul>
-    </div>
-    設定した日時でzoomのミーティングを作成して一覧で表示する
-    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>URL</th>
+            <th>パスワード</th>
+            <th>ミーティングID</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="meeting in meeting_list">
+            <td>{{meeting.id}}</td>
+            <td>{{meeting.url}}</td>
+            <td>{{meeting.pass}}</td>
+            <td>{{meeting.obj}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3>dbはORMにしてみる</h3>
     </div>
     <script src="./front.js"></script>
   </body>

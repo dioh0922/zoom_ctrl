@@ -6,6 +6,7 @@ let page_controller = null;
       req_date: "",
       req_time: "",
       req_title: "",
+      meeting_list: [{id:0,url:"test",pass:"password",obj:"object"}]
     },
     methods: {
       create_meeting(){
@@ -25,5 +26,20 @@ let page_controller = null;
         });
       }
     },
-  })
+  });
+  //get_all_meeting();
 });
+
+function get_all_meeting(){
+  axios.get("./api/get_all_meeting_list.php")
+  .then(function(resonse){
+    let api_result = JSON.parse(response);
+    if(api_result.result == 1){
+      page_controller.meeting_list = api_result.list;
+    }else{
+      alert(api_result.message);
+    }
+  }).catch(function(){
+    alert("失敗しました");
+  });
+}
