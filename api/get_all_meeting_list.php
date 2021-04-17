@@ -1,22 +1,24 @@
 <?php
 require_once(dirname(__FILE__)."/../../env/connection_setting.php");
-
+require_once(dirname(__FILE__)."/../composer/vendor/autoload.php");
 try{
-  $mysqli = new mysqli($SQL_HOST, $SQL_USER, $SQL_PASS, $SQL_DB);
-  $stmt = $mysqli->prepare("SELECT meeting_id as id, meeting_url as url, meeting_pass as pass, meeting_obj_id as obj FROM zoom_url LIMIT 50");
-  $stmt->execute();
+  ORM::configure('mysql:host=localhost;port=3306;dbname='.$SQL_DB);
+  ORM::configure('username', $SQL_USER);
+  ORM::configure('password', $SQL_PASS);
+  ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
+ORM::configure('return_result_sets', true);
+  $record = ORM::for_table("zoom_url")->limit(50)->find_many();
   $list = [];
-  while($data = $stmt->fetch()){
-    $list[] = $data;
+  foreach($record->get_results() as $row){
+    $list[] = ["id" => $row["meeting_id"], "url" => $row["meeting_url"], "pass" => $row["meeting_pass"], "obj" => $row["meeting_obj_id"]];
   }
 
   $result["result"] = 1;
   $result["list"] = $list;
-  $stmt->close();
-  $mysqli->close();
 }catch(Exception $e){
   $result["result"] = -1;
   $result["message"] = $e->getMessage();
 }
-echo json_encode($result, JSON_UNESCAPED_UNICODE);
+$response = json_encode($result, JSON_UNESCAPED_UNICODE);
+echo str_replace("\\", "", $response);
 ?>
