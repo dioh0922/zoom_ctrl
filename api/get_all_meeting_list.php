@@ -2,7 +2,7 @@
 require_once(dirname(__FILE__)."/../../env/connection_setting.php");
 require_once(dirname(__FILE__)."/../composer/vendor/autoload.php");
 try{
-  ORM::configure('mysql:host=localhost;port=3306;dbname='.$SQL_DB);
+  ORM::configure('mysql:host=127.0.0.1;port=3306;dbname='.$SQL_DB);
   ORM::configure('username', $SQL_USER);
   ORM::configure('password', $SQL_PASS);
   ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));

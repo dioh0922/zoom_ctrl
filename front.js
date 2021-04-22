@@ -3,6 +3,7 @@ let page_controller = null;
   page_controller = new Vue({
     el: "#container",
     data:{
+      form_disp: 0,
       req_date: "",
       req_time: "",
       req_title: "",
@@ -15,17 +16,33 @@ let page_controller = null;
           time: this.req_time,
           title: this.req_title
         }).then(function(response){
-          let api_result = JSON.parse(response);
-					if(api_result.result == 1){
+					if(response.data.result == 1){
 						alert("登録しました");
+            location.reload();
 					}else{
-						alert(api_result.message);
+						alert(response.data.message);
 					}
         }).catch(function(){
           alert("失敗しました");
         });
+      },
+      toggle_form(){
+        if(this.form_disp == 0){
+          this.form_disp = 1;
+        }else{
+          this.form_disp = 0;
+        }
       }
     },
+    computed:{
+      disp_str(){
+        if(this.form_disp == 1){
+          return "隠す";
+        }else{
+          return "表示";
+        }
+      }
+    }
   });
   get_all_meeting();
 });

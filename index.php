@@ -8,7 +8,8 @@
   </head>
   <body>
     <div id="container">
-      <ul>
+      <input type="button" v-bind:value="disp_str" v-on:click="toggle_form"/>
+      <ul v-show="form_disp == 1">
         <li><input type="date" v-model="req_date"/></li>
         <li><input type="time" v-model="req_time"/></li>
         <li><input type="text" v-model="req_title"/></li>
@@ -32,7 +33,6 @@
           </tr>
         </tbody>
       </table>
-      <h3>dbはORMにしてみる</h3>
     </div>
     <script src="./front.js"></script>
   </body>
