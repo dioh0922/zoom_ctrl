@@ -27,17 +27,16 @@ let page_controller = null;
       }
     },
   });
-  //get_all_meeting();
+  get_all_meeting();
 });
 
 function get_all_meeting(){
   axios.get("./api/get_all_meeting_list.php")
-  .then(function(resonse){
-    let api_result = JSON.parse(response);
-    if(api_result.result == 1){
-      page_controller.meeting_list = api_result.list;
+  .then(function(response){
+    if(response.data.result == 1){
+      page_controller.meeting_list = response.data.list;
     }else{
-      alert(api_result.message);
+      alert(response.data.message);
     }
   }).catch(function(){
     alert("失敗しました");
